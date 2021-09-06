@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SOLID_Start.Loggen;
+using SOLID_Start.Messaging;
 using SOLID_Start.Persistentie;
 using SOLID_Start.Serialisatie;
+using SOLID_Start.Validatie;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +18,15 @@ namespace SOLID_Start
         ConsoleLogger logger;
         FileKlantSource source;
         JsonKlantenSerializer jsonKlantSerializer;
+        KlantValidatie klantValidatie;
+        MailMessaging mailMessaging;
         public Processor()
         {
             logger = new ConsoleLogger();
             source = new FileKlantSource();
             jsonKlantSerializer = new JsonKlantenSerializer();
+            klantValidatie = new KlantValidatie();
+            mailMessaging = new MailMessaging();
         }
         public void Process()
         {
@@ -28,41 +34,28 @@ namespace SOLID_Start
             string json = source.GetKlantenFromFile();
             klanten = jsonKlantSerializer.GetKlantenFromJsonString(json);
 
-            if (String.IsNullOrEmpty(klanten[0].Naam))
-                logger.Log("Klant moet een naam hebben");
-            else            
+            if (klantValidatie.Validate(klanten[0]))
                 klanten[0].AddMovie(new Huur(new Movie("Godfather", 1), 3));
 
-            if (String.IsNullOrEmpty(klanten[1].Naam))
-                logger.Log("Klant moet een naam hebben");
-            else
+            if (klantValidatie.Validate(klanten[1]))
                 klanten[1].AddMovie(new Huur(new Movie("Lion King", 2), 2));
 
-            if (String.IsNullOrEmpty(klanten[2].Naam))
-                logger.Log("Klant moet een naam hebben");
-            else
+            if (klantValidatie.Validate(klanten[2]))
                 klanten[2].AddMovie(new Huur(new Movie("Rundskop", 1), 4));
 
-            if (String.IsNullOrEmpty(klanten[3].Naam))
-                logger.Log("Klant moet een naam hebben");
-            else
+            if (klantValidatie.Validate(klanten[3]))
                 klanten[3].AddMovie(new Huur(new Movie("Top Gun", 3), 1));
 
-            Console.WriteLine("start berekenen prijs");
+            logger.Log("start berekenen prijs");
             foreach (Klant klant in klanten)
             {
-                Console.WriteLine(klant.GetRekening());
-                SendComfirmationMessage(klant);
+                logger.Log(klant.GetRekening());
+                mailMessaging.SendComfirmationMessage(klant);
             }
-            Console.WriteLine("einde berekening...");
+            logger.Log("einde berekening...");
 
             Console.ReadLine();
         }
 
-        private void SendComfirmationMessage(Klant klant)
-        {
-            Console.WriteLine("stuur een mail naar de klant");
-            Console.WriteLine("SENDING MAIL...");
-        }
     }
 }

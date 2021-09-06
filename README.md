@@ -1,6 +1,5 @@
 # Solid-Course
-Single Responsibility Principe --- Persistentie
+Single Responsibility Principe --- Messaging, Validatie en cleanup
 
-We hebben het converteren van een JSONstring naar een lijst van objecten weggenomen uit Processor en deze in JsonKlantSerializer gezet.
-Vervolgens gebruiken we een instantie van deze serializer in Processor om de serializatie functionaliteit aan te roepen.
-Onze code blijft werken, maar de echte implementatie van wat de GetKlantenFromJsonString methode doet, staat nu apart.
+We hebben de messaging en validatie methoden weggenomen en in hun eigen klasse gezet, zoals bij de voorgaande zaken.
+Vervolgens hebben we hier en daar nog wat logging schoon gemaakt.
