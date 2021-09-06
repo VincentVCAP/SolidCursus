@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SOLID_Start.Loggen;
+using SOLID_Start.Persistentie;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,14 +13,16 @@ namespace SOLID_Start
     class Processor
     {
         ConsoleLogger logger;
+        FileKlantSource source;
         public Processor()
         {
             logger = new ConsoleLogger();
+            source = new FileKlantSource();
         }
         public void Process()
         {
             List<Klant> klanten = new List<Klant>();
-            string json = File.ReadAllText("./klant.json");
+            string json = source.GetKlantenFromFile();
             klanten = JsonConvert.DeserializeObject<List<Klant>>(json, new StringEnumConverter());
             if (String.IsNullOrEmpty(klanten[0].Naam))
                 logger.Log("Klant moet een naam hebben");
