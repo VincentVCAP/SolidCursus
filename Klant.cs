@@ -56,7 +56,7 @@ namespace SOLID_Start
             }
 
             //Add footer lines 
-            result += "Amount owned is " + totalAmount.ToString() + "\n";
+            result += "Amount owed is " + totalAmount.ToString() + "\n";
 
             return result;
         }
