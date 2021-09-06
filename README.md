@@ -1,5 +1,6 @@
 # Solid-Course
-Single Responsibility Principe --- Messaging, Validatie en cleanup
+Open / Closed Principle --- Start
 
-We hebben de messaging en validatie methoden weggenomen en in hun eigen klasse gezet, zoals bij de voorgaande zaken.
-Vervolgens hebben we hier en daar nog wat logging schoon gemaakt.
+Rekening functionaliteit van Klant naar Huur en Movie verplaatst.
+De Klant moet niet weten hoe dit werkt, het is belangrijk hoe Huur en Movie weten hoe zij dit voor zichzelf moeten doen.
+Zo staat alle functionaliteit op de juiste plaats, in de juiste klasse.

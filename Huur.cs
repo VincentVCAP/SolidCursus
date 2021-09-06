@@ -14,5 +14,9 @@ namespace SOLID_Start
             this.Movie = movie;
             this.AantalDagen = aantalDagen;
         }
+        public double RekeningVoor()
+        {
+            return Movie.RekeningVoor(AantalDagen);
+        }
     }
 }
