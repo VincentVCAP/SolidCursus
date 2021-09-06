@@ -1,5 +1,6 @@
 # Solid-Course
-Single Responsibility Principe --- Probleem
+Single Responsibility Principe --- Logging
 
-De verwerking zal nu plaats vinden in de Processor klasse, maar hier staat een hele hoop in.
-Bekijk de klasse en probeer zaken te vinden die ingaan tegen het Single Responsibility Principe
+We hebben de logging functionaliteit weggenomen uit Processor en deze in ConsoleLogger gezet.
+Vervolgens gebruiken we een instantie van deze logger in Processor om de logging functionaliteit aan te roepen.
+Onze code blijft werken, maar de echte implementatie van wat de Log() methode doet, staat nu apart.

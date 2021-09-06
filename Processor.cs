@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SOLID_Start.Loggen;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,31 +11,35 @@ namespace SOLID_Start
 {
     class Processor
     {
-
+        ConsoleLogger logger;
+        public Processor()
+        {
+            logger = new ConsoleLogger();
+        }
         public void Process()
         {
             List<Klant> klanten = new List<Klant>();
             string json = File.ReadAllText("./klant.json");
             klanten = JsonConvert.DeserializeObject<List<Klant>>(json, new StringEnumConverter());
             if (String.IsNullOrEmpty(klanten[0].Naam))
-                Console.WriteLine("Klant moet een naam hebben");
+                logger.Log("Klant moet een naam hebben");
             else            
                 klanten[0].AddMovie(new Huur(new Movie("Godfather", 1), 3));
 
-            if (String.IsNullOrEmpty(klanten[0].Naam))
-                Console.WriteLine("Klant moet een naam hebben");
+            if (String.IsNullOrEmpty(klanten[1].Naam))
+                logger.Log("Klant moet een naam hebben");
             else
-                klanten[0].AddMovie(new Huur(new Movie("Lion King", 2), 2));
+                klanten[1].AddMovie(new Huur(new Movie("Lion King", 2), 2));
 
-            if (String.IsNullOrEmpty(klanten[0].Naam))
-                Console.WriteLine("Klant moet een naam hebben");
+            if (String.IsNullOrEmpty(klanten[2].Naam))
+                logger.Log("Klant moet een naam hebben");
             else
-                klanten[0].AddMovie(new Huur(new Movie("Rundskop", 1), 4));
+                klanten[2].AddMovie(new Huur(new Movie("Rundskop", 1), 4));
 
-            if (String.IsNullOrEmpty(klanten[0].Naam))
-                Console.WriteLine("Klant moet een naam hebben");
+            if (String.IsNullOrEmpty(klanten[3].Naam))
+                logger.Log("Klant moet een naam hebben");
             else
-                klanten[0].AddMovie(new Huur(new Movie("Top Gun", 3), 1));
+                klanten[3].AddMovie(new Huur(new Movie("Top Gun", 3), 1));
 
             Console.WriteLine("start berekenen prijs");
             foreach (Klant klant in klanten)
