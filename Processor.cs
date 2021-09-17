@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SOLID_Start.Factory;
 using SOLID_Start.Loggen;
 using SOLID_Start.Messaging;
 using SOLID_Start.Movies;
@@ -21,6 +22,7 @@ namespace SOLID_Start
         JsonKlantenSerializer jsonKlantSerializer;
         KlantValidatie klantValidatie;
         MailMessaging mailMessaging;
+        MovieFactory movieFactory;
         public Processor()
         {
             logger = new ConsoleLogger();
@@ -28,6 +30,7 @@ namespace SOLID_Start
             jsonKlantSerializer = new JsonKlantenSerializer();
             klantValidatie = new KlantValidatie();
             mailMessaging = new MailMessaging();
+            movieFactory = new MovieFactory();
         }
         public void Process()
         {
@@ -57,21 +60,10 @@ namespace SOLID_Start
                 AddMovie(movieName, priceCode, klant, aantalDagen);
             }
         }
-        private void AddMovie(string movie_name, int movieType, Klant klant, int aantalDagen)
+        private void AddMovie(string movieName, int movieType, Klant klant, int aantalDagen)
         {
-            Movie movie = null;
-            if (movieType == 1)
-            {
-                movie = new RegularMovie(movie_name);
-            }
-            if (movieType == 2)
-            {
-                movie = new ChildrenMovie(movie_name);
-            }
-            if (movieType == 3)
-            {
-                movie = new NewReleaseMovie(movie_name);
-            }
+            Movie movie = movieFactory.Create(movieType, movieName);
+         
             if (movie != null)
             {
                 klant.AddMovie(new Huur(movie, aantalDagen));
