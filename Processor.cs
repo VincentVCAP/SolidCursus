@@ -66,11 +66,7 @@ namespace SOLID_Start
         private void AddMovie(string movieName, string type, Klant klant, int aantalDagen)
         {
             Movie movie = movieFactory.Create(type, movieName);
-         
-            if (movie != null)
-            {
-                klant.AddMovie(new Huur(movie, aantalDagen));
-            }
+            klant.AddMovie(new Huur(movie, aantalDagen));
         }
     }
 }

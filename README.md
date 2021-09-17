@@ -1,4 +1,5 @@
 # Solid-Course
-Open / Closed Principle --- Movie factory met reflection
+Liskov Substitution Principle --- NullMovie
 
-Nu is de if/else uit de factory weg en wordt het type dynamisch opgezocht met reflection.
+we willen niet met Null werken, dit zorgt voor vervelende checks of exceptions.
+dus als we een onbekende movie hebben dan maken we nu een NullMovie zodat alles blijft werken.

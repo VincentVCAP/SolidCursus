@@ -16,7 +16,7 @@ namespace SOLID_Start.Factory
             }
             catch (Exception)
             {
-                return null;
+                return new NullMovie(movieName);
             }
         }      
     }
