@@ -1,6 +1,4 @@
 # Solid-Course
-Open / Closed Principle --- Start
+Open / Closed Principle --- Movie factory met reflection
 
-Rekening functionaliteit van Klant naar Huur en Movie verplaatst.
-De Klant moet niet weten hoe dit werkt, het is belangrijk hoe Huur en Movie weten hoe zij dit voor zichzelf moeten doen.
-Zo staat alle functionaliteit op de juiste plaats, in de juiste klasse.
+Nu is de if/else uit de factory weg en wordt het type dynamisch opgezocht met reflection.

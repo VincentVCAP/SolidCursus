@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SOLID_Start.Factory;
 using SOLID_Start.Loggen;
 using SOLID_Start.Messaging;
+using SOLID_Start.Movies;
 using SOLID_Start.Persistentie;
 using SOLID_Start.Serialisatie;
 using SOLID_Start.Validatie;
@@ -20,6 +22,7 @@ namespace SOLID_Start
         JsonKlantenSerializer jsonKlantSerializer;
         KlantValidatie klantValidatie;
         MailMessaging mailMessaging;
+        MovieFactory movieFactory;
         public Processor()
         {
             logger = new ConsoleLogger();
@@ -27,6 +30,7 @@ namespace SOLID_Start
             jsonKlantSerializer = new JsonKlantenSerializer();
             klantValidatie = new KlantValidatie();
             mailMessaging = new MailMessaging();
+            movieFactory = new MovieFactory();
         }
         public void Process()
         {
@@ -34,17 +38,13 @@ namespace SOLID_Start
             string json = source.GetKlantenFromFile();
             klanten = jsonKlantSerializer.GetKlantenFromJsonString(json);
 
-            if (klantValidatie.Validate(klanten[0]))
-                klanten[0].AddMovie(new Huur(new Movie("Godfather", 1), 3));
-
-            if (klantValidatie.Validate(klanten[1]))
-                klanten[1].AddMovie(new Huur(new Movie("Lion King", 2), 2));
-
-            if (klantValidatie.Validate(klanten[2]))
-                klanten[2].AddMovie(new Huur(new Movie("Rundskop", 1), 4));
-
-            if (klantValidatie.Validate(klanten[3]))
-                klanten[3].AddMovie(new Huur(new Movie("Top Gun", 3), 1));
+            /*Is dit handiger? Wat zijn de nadelen hiervan?
+             * Wat zijn de voordelen?
+             */
+            ProcessKlant(klanten[0], "Godfather", "RegularMovie", 3);
+            ProcessKlant(klanten[1], "Lion King", "ChildrenMovie", 2);
+            ProcessKlant(klanten[2], "Rundskop", "NewReleaseMovie", 4);
+            ProcessKlant(klanten[3], "Top Gun", "RegularMovie", 1);
 
             logger.Log("start berekenen prijs");
             foreach (Klant klant in klanten)
@@ -56,6 +56,21 @@ namespace SOLID_Start
 
             Console.ReadLine();
         }
-
+        private void ProcessKlant(Klant klant, string movieName, string type, int aantalDagen)
+        {
+            if (klantValidatie.Validate(klant))
+            {
+                AddMovie(movieName, type, klant, aantalDagen);
+            }
+        }
+        private void AddMovie(string movieName, string type, Klant klant, int aantalDagen)
+        {
+            Movie movie = movieFactory.Create(type, movieName);
+         
+            if (movie != null)
+            {
+                klant.AddMovie(new Huur(movie, aantalDagen));
+            }
+        }
     }
 }
