@@ -7,23 +7,17 @@ namespace SOLID_Start.Factory
 {
     class MovieFactory
     {
-        public Movie Create(int movieType, string movieName)
+        public Movie Create(string type, string movieName)
         {
-            Movie movie = null;
-            if (movieType == 1)
+            try
             {
-                movie = new RegularMovie(movieName);
+                Movie m = (Movie)Activator.CreateInstance(Type.GetType($"SOLID_Start.Movies.{type}"), new Object[] { movieName });
+                return m;
             }
-            if (movieType == 2)
+            catch (Exception)
             {
-                movie = new ChildrenMovie(movieName);
+                return null;
             }
-            if (movieType == 3)
-            {
-                movie = new NewReleaseMovie(movieName);
-            }
-
-            return movie;
         }      
     }
 }

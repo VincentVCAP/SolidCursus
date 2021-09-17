@@ -38,10 +38,13 @@ namespace SOLID_Start
             string json = source.GetKlantenFromFile();
             klanten = jsonKlantSerializer.GetKlantenFromJsonString(json);
 
-            ProcessKlant(klanten[0], "Godfather", 1, 3);
-            ProcessKlant(klanten[1], "Lion King", 2, 2);
-            ProcessKlant(klanten[2], "Rundskop", 1, 4);
-            ProcessKlant(klanten[3], "Top Gun", 3, 1);
+            /*Is dit handiger? Wat zijn de nadelen hiervan?
+             * Wat zijn de voordelen?
+             */
+            ProcessKlant(klanten[0], "Godfather", "RegularMovie", 3);
+            ProcessKlant(klanten[1], "Lion King", "ChildrenMovie", 2);
+            ProcessKlant(klanten[2], "Rundskop", "NewReleaseMovie", 4);
+            ProcessKlant(klanten[3], "Top Gun", "RegularMovie", 1);
 
             logger.Log("start berekenen prijs");
             foreach (Klant klant in klanten)
@@ -53,16 +56,16 @@ namespace SOLID_Start
 
             Console.ReadLine();
         }
-        private void ProcessKlant(Klant klant, string movieName, int priceCode, int aantalDagen)
+        private void ProcessKlant(Klant klant, string movieName, string type, int aantalDagen)
         {
             if (klantValidatie.Validate(klant))
             {
-                AddMovie(movieName, priceCode, klant, aantalDagen);
+                AddMovie(movieName, type, klant, aantalDagen);
             }
         }
-        private void AddMovie(string movieName, int movieType, Klant klant, int aantalDagen)
+        private void AddMovie(string movieName, string type, Klant klant, int aantalDagen)
         {
-            Movie movie = movieFactory.Create(movieType, movieName);
+            Movie movie = movieFactory.Create(type, movieName);
          
             if (movie != null)
             {
