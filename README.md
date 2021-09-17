@@ -1,6 +1,6 @@
 # Solid-Course
-Open / Closed Principle --- Start
+Open / Closed Principle --- Movie functionaliteit + Processor changes
 
-Rekening functionaliteit van Klant naar Huur en Movie verplaatst.
-De Klant moet niet weten hoe dit werkt, het is belangrijk hoe Huur en Movie weten hoe zij dit voor zichzelf moeten doen.
-Zo staat alle functionaliteit op de juiste plaats, in de juiste klasse.
+Movie functionaliteit van Movie naar subklassen verplaatst.
+Wanneer er nu iets aan ChildrenMovie verandert moet niet heel de methode binnen movie aangepast worden, enkel in ChildrenMovie zelf.
+Verder hebben we ook de Processor klasse ook wat geupgrade om makkelijker aanpasbaar te zijn
