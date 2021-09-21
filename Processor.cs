@@ -18,20 +18,20 @@ namespace SOLID_Start
 {
     class Processor
     {
-        ConsoleLogger logger;
+        ILogger logger;
         FileKlantSource source;
         JsonKlantenSerializer jsonKlantSerializer;
         KlantValidatie klantValidatie;
         MailMessaging mailMessaging;
         MovieFactory movieFactory;
         ExportManager exportManager;
-        public Processor()
+        public Processor(ILogger logger)
         {
-            logger = new ConsoleLogger();
+            this.logger = logger;
             source = new FileKlantSource();
             jsonKlantSerializer = new JsonKlantenSerializer();
-            klantValidatie = new KlantValidatie();
-            mailMessaging = new MailMessaging();
+            klantValidatie = new KlantValidatie(logger);
+            mailMessaging = new MailMessaging(logger);
             movieFactory = new MovieFactory();
             exportManager = new ExportManager(logger);
         }

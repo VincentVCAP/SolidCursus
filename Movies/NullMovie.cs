@@ -7,7 +7,7 @@ namespace SOLID_Start.Movies
 {
     class NullMovie:Movie
     {
-        ConsoleLogger logger;
+        ILogger logger;
         public NullMovie(string movie_name):base(movie_name)
         {
             logger = new ConsoleLogger();

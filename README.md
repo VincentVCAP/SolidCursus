@@ -1,6 +1,5 @@
 # Solid-Course
-Interface Segregation Principle --- Oplossing
+Dependency Inversion Principle --- ILogger
 
-Er is nu enkel nog een ojbect Export aanwezig, deze kan eenvoudig geimplementeerd worden door KlantDocument (want een string is ook een object).
-In de ExportManager heb je nog steeds de ExportToText die nog even (in dit geval onnodige) cast doet naar een string van het object.
-ExportManager kan nu niet meer de, de nu onbestaande, niet geimplementeerde ToPdf aanroepen.
+We hebben ervoor gezorgd dat overal ILogger wordt meegegeven met de constructors.
+zo kunnen we dus op 1 plaats kiezen welke soort logger we willen gebruiken, zonder dat de klassen die er gebruik van maken moeten weten over welk soort logger het gaat.

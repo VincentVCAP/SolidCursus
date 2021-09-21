@@ -8,9 +8,9 @@ namespace SOLID_Start.Export
 {
     class ExportManager
     {
-        private ConsoleLogger logger;
+        private ILogger logger;
         private IExportableDocument exportDoc;
-        public ExportManager(ConsoleLogger logger)
+        public ExportManager(ILogger logger)
         {
             this.logger = logger;
         }

@@ -7,10 +7,10 @@ namespace SOLID_Start.Messaging
 {
     class MailMessaging
     {
-        ConsoleLogger logger;
-        public MailMessaging()
+        ILogger logger;
+        public MailMessaging(ILogger logger)
         {
-            logger = new ConsoleLogger();
+            this.logger = logger;
         }
         public void SendComfirmationMessage(Klant klant)
         {

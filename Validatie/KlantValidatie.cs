@@ -7,10 +7,10 @@ namespace SOLID_Start.Validatie
 {
     class KlantValidatie
     {
-        ConsoleLogger logger;
-        public KlantValidatie()
+        ILogger logger;
+        public KlantValidatie(ILogger logger)
         {
-            logger = new ConsoleLogger();
+            this.logger = logger;
         }
         public bool Validate(Klant klant)
         {
