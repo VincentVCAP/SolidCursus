@@ -1,4 +1,4 @@
 # Solid-Course
-Dependency Inversion Principle --- IKlantSource en IKlantSerializer
+Dependency Inversion Principle --- Validator
 
-Net hetzelfde als het vorige maar dan voor IKlantSource en IKlantSerializer.
+Door een generieke validator te maken kunnen we andere dingen naar de toekomst toe ook valideren!

@@ -22,17 +22,18 @@ namespace SOLID_Start
         IKlantSource klantSource;
         IKlantSerializer klantSerializer;
 
-        KlantValidatie klantValidatie;
+        Validator<Klant> validator;
 
         MailMessaging mailMessaging;
         MovieFactory movieFactory;
         ExportManager exportManager;
-        public Processor(ILogger logger,IKlantSerializer serializer,IKlantSource source)
+        public Processor(ILogger logger,IKlantSerializer serializer,IKlantSource source, Validator<Klant> validator)
         {
             this.logger = logger;
             klantSource = source;
             klantSerializer = serializer;
-            klantValidatie = new KlantValidatie(logger);
+            this.validator = validator;
+
             mailMessaging = new MailMessaging(logger);
             movieFactory = new MovieFactory();
             exportManager = new ExportManager(logger);
@@ -64,7 +65,7 @@ namespace SOLID_Start
         }
         private void ProcessKlant(Klant klant, string movieName, string type, int aantalDagen)
         {
-            if (klantValidatie.Validate(klant))
+            if (validator.Validate(klant))
             {
                 AddMovie(movieName, type, klant, aantalDagen);
             }

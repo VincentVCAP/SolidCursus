@@ -1,6 +1,7 @@
 ﻿using SOLID_Start.Loggen;
 using SOLID_Start.Persistentie;
 using SOLID_Start.Serialisatie;
+using SOLID_Start.Validatie;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,8 @@ namespace SOLID_Start
             ILogger logger = new ConsoleLogger();
             IKlantSource source = new FileKlantSource();
             IKlantSerializer serializer = new JsonKlantenSerializer();
-            Processor processor = new Processor(logger,serializer,source);
+            Validator<Klant> validator = new KlantValidatie(logger);
+            Processor processor = new Processor(logger,serializer,source,validator);
             processor.Process();
         }
     }
