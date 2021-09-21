@@ -18,8 +18,7 @@ namespace SOLID_Start.Export
         public void ExportToText(Klant klant)
         {
             exportDoc = new KlantDocument(klant);
-            Console.WriteLine(exportDoc.ToText());
+            Console.WriteLine((string)exportDoc.Export());
         }
-
     }
 }

@@ -12,18 +12,13 @@ namespace SOLID_Start.Export
             this.klant = klant;
         }
 
-        public byte[] ToPdf()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ToText()
+        public object Export()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("klant:").Append(klant.Naam);
             klant.movies.ForEach(klant =>
             {
-                sb.Append("gehuurde film:").Append(klant.Movie.Title);
+                sb.Append("gehuurde film: ").Append(klant.Movie.Title).Append("\n");               
             });
             return sb.ToString();
         }

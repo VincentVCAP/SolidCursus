@@ -6,7 +6,6 @@ namespace SOLID_Start.Export
 {
     interface IExportableDocument
     {
-        string ToText();
-        byte[] ToPdf();
+        object Export();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SOLID_Start.Export;
 using SOLID_Start.Factory;
 using SOLID_Start.Loggen;
 using SOLID_Start.Messaging;
@@ -23,6 +24,7 @@ namespace SOLID_Start
         KlantValidatie klantValidatie;
         MailMessaging mailMessaging;
         MovieFactory movieFactory;
+        ExportManager exportManager;
         public Processor()
         {
             logger = new ConsoleLogger();
@@ -31,6 +33,7 @@ namespace SOLID_Start
             klantValidatie = new KlantValidatie();
             mailMessaging = new MailMessaging();
             movieFactory = new MovieFactory();
+            exportManager = new ExportManager(logger);
         }
         public void Process()
         {
@@ -53,7 +56,8 @@ namespace SOLID_Start
                 mailMessaging.SendComfirmationMessage(klant);
             }
             logger.Log("einde berekening...");
-
+            Console.WriteLine($"export van {klanten[0].Naam}:");
+            exportManager.ExportToText(klanten[0]);
             Console.ReadLine();
         }
         private void ProcessKlant(Klant klant, string movieName, string type, int aantalDagen)

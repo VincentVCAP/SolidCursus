@@ -1,6 +1,6 @@
 # Solid-Course
-Interface Segregation Principle --- Start
+Interface Segregation Principle --- Oplossing
 
-We hebben nieuwe export functionaliteit toegevoegd om een overzicht van de gehuurde films etc van een klant te exporteren (in dit geval nog afdrukken op de console)
-Maar er is een probleem: onze interface heeft 2 methoden: ToText en ToPdf, de eerste methode kan geimplementeerd worden in onze KlantDocumentKlasse, maar de 2e niet!
-Dit geeft wat overbodige code, probeer dit te fixen zodat alles in het export mapje toch blijft werken.
+Er is nu enkel nog een ojbect Export aanwezig, deze kan eenvoudig geimplementeerd worden door KlantDocument (want een string is ook een object).
+In de ExportManager heb je nog steeds de ExportToText die nog even (in dit geval onnodige) cast doet naar een string van het object.
+ExportManager kan nu niet meer de, de nu onbestaande, niet geimplementeerde ToPdf aanroepen.
