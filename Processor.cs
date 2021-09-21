@@ -19,17 +19,19 @@ namespace SOLID_Start
     class Processor
     {
         ILogger logger;
-        FileKlantSource source;
-        JsonKlantenSerializer jsonKlantSerializer;
+        IKlantSource klantSource;
+        IKlantSerializer klantSerializer;
+
         KlantValidatie klantValidatie;
+
         MailMessaging mailMessaging;
         MovieFactory movieFactory;
         ExportManager exportManager;
-        public Processor(ILogger logger)
+        public Processor(ILogger logger,IKlantSerializer serializer,IKlantSource source)
         {
             this.logger = logger;
-            source = new FileKlantSource();
-            jsonKlantSerializer = new JsonKlantenSerializer();
+            klantSource = source;
+            klantSerializer = serializer;
             klantValidatie = new KlantValidatie(logger);
             mailMessaging = new MailMessaging(logger);
             movieFactory = new MovieFactory();
@@ -38,8 +40,8 @@ namespace SOLID_Start
         public void Process()
         {
             List<Klant> klanten = new List<Klant>();
-            string json = source.GetKlantenFromFile();
-            klanten = jsonKlantSerializer.GetKlantenFromJsonString(json);
+            string json = klantSource.GetKlantenFromSource();
+            klanten = klantSerializer.GetKlantenFromSerialization(json);
 
             /*Is dit handiger? Wat zijn de nadelen hiervan?
              * Wat zijn de voordelen?
