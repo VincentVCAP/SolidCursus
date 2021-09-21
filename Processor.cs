@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SOLID_Start.Export;
 using SOLID_Start.Factory;
 using SOLID_Start.Loggen;
 using SOLID_Start.Messaging;
@@ -17,26 +18,31 @@ namespace SOLID_Start
 {
     class Processor
     {
-        ConsoleLogger logger;
-        FileKlantSource source;
-        JsonKlantenSerializer jsonKlantSerializer;
-        KlantValidatie klantValidatie;
+        ILogger logger;
+        IKlantSource klantSource;
+        IKlantSerializer klantSerializer;
+
+        Validator<Klant> validator;
+
         MailMessaging mailMessaging;
         MovieFactory movieFactory;
-        public Processor()
+        ExportManager exportManager;
+        public Processor(ILogger logger,IKlantSerializer serializer,IKlantSource source, Validator<Klant> validator)
         {
-            logger = new ConsoleLogger();
-            source = new FileKlantSource();
-            jsonKlantSerializer = new JsonKlantenSerializer();
-            klantValidatie = new KlantValidatie();
-            mailMessaging = new MailMessaging();
+            this.logger = logger;
+            klantSource = source;
+            klantSerializer = serializer;
+            this.validator = validator;
+
+            mailMessaging = new MailMessaging(logger);
             movieFactory = new MovieFactory();
+            exportManager = new ExportManager(logger);
         }
         public void Process()
         {
             List<Klant> klanten = new List<Klant>();
-            string json = source.GetKlantenFromFile();
-            klanten = jsonKlantSerializer.GetKlantenFromJsonString(json);
+            string json = klantSource.GetKlantenFromSource();
+            klanten = klantSerializer.GetKlantenFromSerialization(json);
 
             /*Is dit handiger? Wat zijn de nadelen hiervan?
              * Wat zijn de voordelen?
@@ -53,12 +59,13 @@ namespace SOLID_Start
                 mailMessaging.SendComfirmationMessage(klant);
             }
             logger.Log("einde berekening...");
-
+            Console.WriteLine($"export van {klanten[0].Naam}:");
+            exportManager.ExportToText(klanten[0]);
             Console.ReadLine();
         }
         private void ProcessKlant(Klant klant, string movieName, string type, int aantalDagen)
         {
-            if (klantValidatie.Validate(klant))
+            if (validator.Validate(klant))
             {
                 AddMovie(movieName, type, klant, aantalDagen);
             }
@@ -66,11 +73,7 @@ namespace SOLID_Start
         private void AddMovie(string movieName, string type, Klant klant, int aantalDagen)
         {
             Movie movie = movieFactory.Create(type, movieName);
-         
-            if (movie != null)
-            {
-                klant.AddMovie(new Huur(movie, aantalDagen));
-            }
+            klant.AddMovie(new Huur(movie, aantalDagen));
         }
     }
 }

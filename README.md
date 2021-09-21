@@ -1,4 +1,4 @@
 # Solid-Course
-Open / Closed Principle --- Movie factory met reflection
+Dependency Inversion Principle --- Validator
 
-Nu is de if/else uit de factory weg en wordt het type dynamisch opgezocht met reflection.
+Door een generieke validator te maken kunnen we andere dingen naar de toekomst toe ook valideren!
